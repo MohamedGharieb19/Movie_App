@@ -15,4 +15,14 @@
         android:name="com.gharieb.movie_app.ui.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.gharieb.movie_app.ui.fragments.MyListFragment"
+        android:label="fragment_my_list"
+        tools:layout="@layout/fragment_my_list" />
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.gharieb.movie_app.ui.fragments.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details" />
 </navigation>
