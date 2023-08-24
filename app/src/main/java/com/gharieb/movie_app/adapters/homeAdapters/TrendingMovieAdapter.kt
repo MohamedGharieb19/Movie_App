@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.gharieb.movie_app.data.categories.Categories
 import com.gharieb.movie_app.data.trendingMovies.Movie
 import com.gharieb.movie_app.databinding.TrendingMoviesItemBinding
 
 class TrendingMovieAdapter(): RecyclerView.Adapter<TrendingMovieAdapter.viewHolder>() {
-
+    lateinit var onMovieClick: ((Movie)  -> Unit )
     class viewHolder(val binding: TrendingMoviesItemBinding): RecyclerView.ViewHolder(binding.root) {}
 
     private val diffUtil = object : DiffUtil.ItemCallback<Movie>(){
@@ -42,6 +43,10 @@ class TrendingMovieAdapter(): RecyclerView.Adapter<TrendingMovieAdapter.viewHold
         Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w154" + data.image)
             .into(holder.binding.imageView)
         holder.binding.rateTextView.text = data.vote_average.toString()
+
+        holder.itemView.setOnClickListener {
+            onMovieClick.invoke(data)
+        }
     }
 
 }

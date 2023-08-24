@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.gharieb.movie_app.R
 import com.gharieb.movie_app.adapters.homeAdapters.TrendingMovieAdapter
 import com.gharieb.movie_app.adapters.homeAdapters.TrendingPeopleAdapter
 import com.gharieb.movie_app.adapters.homeAdapters.TrendingTvAdapter
@@ -38,6 +40,7 @@ class HomePageFragment : Fragment() {
         getTrendingTv()
         getTrendingMovies()
         getTrendingPeople()
+        onMovieClick()
     }
 
     private fun setupTvAdapter(){
@@ -84,6 +87,16 @@ class HomePageFragment : Fragment() {
         viewModel.getTrendingPeople()
         lifecycleScope.launch{
             viewModel.peopleList.collect{ peopleAdapter.differ.submitList(it) }
+        }
+    }
+
+    private fun onMovieClick(){
+        movieAdapter.onMovieClick = { data ->
+           val fragment = MovieDetailsFragment()
+           val bundle = Bundle()
+           bundle.putInt("movie_Id",data.id)
+           fragment.arguments = bundle
+            findNavController().navigate(R.id.action_homePageFragment_to_movieDetailsFragment,bundle)
         }
     }
 

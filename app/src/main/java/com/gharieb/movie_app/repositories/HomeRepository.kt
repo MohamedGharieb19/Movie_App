@@ -1,6 +1,5 @@
 package com.gharieb.movie_app.repositories
 
-import android.util.Log
 import com.gharieb.movie_app.api.ApiService
 import com.gharieb.movie_app.data.trendingMovies.Movie
 import com.gharieb.movie_app.data.trendingPeople.People

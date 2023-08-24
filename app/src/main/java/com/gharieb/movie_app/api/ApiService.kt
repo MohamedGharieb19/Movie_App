@@ -1,6 +1,8 @@
 package com.gharieb.movie_app.api
 
 import com.gharieb.movie_app.data.categories.CategoriesResponse
+import com.gharieb.movie_app.data.getMovieById.MovieById
+import com.gharieb.movie_app.data.trendingMovies.Movie
 import com.gharieb.movie_app.data.trendingMovies.TrendingMovies
 import com.gharieb.movie_app.data.trendingPeople.TrendingPeople
 import com.gharieb.movie_app.data.trendingTv.TrendingTv
@@ -45,7 +47,7 @@ interface ApiService {
 
     @GET("movie/{movie_id}")
     suspend fun getMovieById(
-        @Query("api_key") ApiKey: String,
-        @Path("movie_id") MovieId: Int
-    ): Response<TrendingMovies>
+        @Path("movie_id") MovieId: Int,
+        @Query("api_key") ApiKey: String
+    ): Response<MovieById>
 }
