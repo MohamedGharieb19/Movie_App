@@ -15,6 +15,11 @@ A simple and interactive movie app that allows users to explore trending movies,
 # Used Api: 
 - [https://api.openai.com/](https://api.themoviedb.org/3/)
 
+# Screenshots: 
+![Screenshot 1](screenshots/homePage.png)
+![Screenshot 2](screenshots/followHomePage.png)
+
+
 # Getting Started:
 
 - Clone the repository to your local machine.
