@@ -2,6 +2,7 @@ package com.gharieb.movie_app.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gharieb.movie_app.data.trendingMovies.Movie
 import com.gharieb.movie_app.data.trendingTv.Tv
 import com.gharieb.movie_app.repositories.SearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,8 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
 ): ViewModel() {
-    private val _searchedItemList = MutableStateFlow(emptyList<Tv>())
-    val searchedItemList: StateFlow<List<Tv>> = _searchedItemList
+    private val _searchedItemList = MutableStateFlow(emptyList<Movie>())
+    val searchedItemList: StateFlow<List<Movie>> = _searchedItemList
 
     fun getSearchedItem(query: String) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -35,6 +35,17 @@ class HomeRepository @Inject constructor(
         return movieList
     }
 
+    suspend fun getUpComingMovies() : StateFlow<List<Movie>>{
+        val movieList = MutableStateFlow(emptyList<Movie>())
+
+        val response = api.getUpComingMovies(apiKey)
+        if (response.isSuccessful){
+            val body = response.body()?.trendingMovie
+            movieList.value = body!!
+        }
+        return movieList
+    }
+
     suspend fun getTrendingPeople() : StateFlow<List<People>>{
         val peopleList = MutableStateFlow(emptyList<People>())
 

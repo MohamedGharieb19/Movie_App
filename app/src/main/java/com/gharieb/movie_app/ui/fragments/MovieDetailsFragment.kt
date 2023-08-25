@@ -1,7 +1,6 @@
 package com.gharieb.movie_app.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,8 @@ import com.bumptech.glide.Glide
 import com.gharieb.movie_app.R
 import com.gharieb.movie_app.adapters.CategoriesAdapter
 import com.gharieb.movie_app.adapters.ProductionCompaniesAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingMovieAdapter
-import com.gharieb.movie_app.databinding.FragmentHomePageBinding
+import com.gharieb.movie_app.adapters.TrendingMovieAdapter
 import com.gharieb.movie_app.databinding.FragmentMovieDetailsBinding
-import com.gharieb.movie_app.viewModels.HomeViewModel
 import com.gharieb.movie_app.viewModels.MovieDetailsViewModel
 import com.gharieb.movie_app.viewModels.MyListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +45,7 @@ class MovieDetailsFragment : Fragment() {
         getMovieId()
         onMoreLikeThisClick()
         fetchData(movieId)
+        binding.backArrowButton.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun setupCategoriesAdapter(){
@@ -63,7 +61,7 @@ class MovieDetailsFragment : Fragment() {
             adapter = moreLikeThisAdapter
         }
     }
-    
+
     private fun setupProductionCompaniesAdapter(){
         productionCompaniesAdapter = ProductionCompaniesAdapter()
         binding.productionCompaniesRecyclerView.apply {
@@ -82,7 +80,7 @@ class MovieDetailsFragment : Fragment() {
             binding.rate.text = data.vote_average.toString()
             genreAdapter.differ.submitList(data.genres)
             productionCompaniesAdapter.differ.submitList(data.production_companies)
-            myListViewModel.getMoviesByCategory(data.genres[1].id)
+            myListViewModel.getMoviesByCategory(data.genres[0].id)
             lifecycleScope.launch {
                 myListViewModel.movieByCategoryList.collect{ moreLikeThisAdapter.differ.submitList(it) }
             }

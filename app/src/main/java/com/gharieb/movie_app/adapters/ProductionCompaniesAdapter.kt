@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.gharieb.movie_app.R
 import com.gharieb.movie_app.data.getMovieById.ProductionCompany
 import com.gharieb.movie_app.data.trendingPeople.People
 import com.gharieb.movie_app.databinding.ProductionCompaniesItemBinding
@@ -42,6 +43,7 @@ class ProductionCompaniesAdapter(): RecyclerView.Adapter<ProductionCompaniesAdap
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
         val data = differ.currentList[position]
         Glide.with(holder.itemView).load("https://image.tmdb.org/t/p/w154" + data.logo_path)
+            .placeholder(R.drawable.ic_person)
             .into(holder.binding.image)
 
     }

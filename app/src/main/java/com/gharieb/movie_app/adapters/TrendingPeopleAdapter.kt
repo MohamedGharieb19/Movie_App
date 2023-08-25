@@ -1,4 +1,4 @@
-package com.gharieb.movie_app.adapters.homeAdapters
+package com.gharieb.movie_app.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gharieb.movie_app.data.trendingPeople.People
-import com.gharieb.movie_app.databinding.TopPeopleItemBinding
-
+import com.gharieb.movie_app.databinding.TopActorsItemBinding
 
 class TrendingPeopleAdapter(): RecyclerView.Adapter<TrendingPeopleAdapter.viewHolder>() {
 
-    class viewHolder(val binding: TopPeopleItemBinding): RecyclerView.ViewHolder(binding.root) {}
+    class viewHolder(val binding: TopActorsItemBinding): RecyclerView.ViewHolder(binding.root) {}
 
     private val diffUtil = object : DiffUtil.ItemCallback<People>(){
         override fun areItemsTheSame(oldItem: People, newItem: People): Boolean {
@@ -27,7 +26,7 @@ class TrendingPeopleAdapter(): RecyclerView.Adapter<TrendingPeopleAdapter.viewHo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         return viewHolder(
-            TopPeopleItemBinding.inflate(
+            TopActorsItemBinding.inflate(
                 LayoutInflater.from(parent.context)
                 ,parent
                 ,false)

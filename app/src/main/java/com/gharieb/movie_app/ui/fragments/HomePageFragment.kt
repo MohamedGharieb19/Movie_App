@@ -1,7 +1,6 @@
 package com.gharieb.movie_app.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.gharieb.movie_app.R
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingMovieAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingPeopleAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingTvAdapter
+import com.gharieb.movie_app.adapters.TrendingMovieAdapter
+import com.gharieb.movie_app.adapters.TrendingPeopleAdapter
+import com.gharieb.movie_app.adapters.TrendingTvAdapter
 import com.gharieb.movie_app.databinding.FragmentHomePageBinding
 import com.gharieb.movie_app.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +24,7 @@ class HomePageFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var tvAdapter: TrendingTvAdapter
     private lateinit var movieAdapter: TrendingMovieAdapter
+    private lateinit var upcomingMovieAdapter: TrendingMovieAdapter
     private lateinit var peopleAdapter: TrendingPeopleAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +34,16 @@ class HomePageFragment : Fragment() {
         binding = FragmentHomePageBinding.inflate(inflater,container,false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getTrendingTv()
         getTrendingMovies()
         getTrendingPeople()
+        getUpcomingMovies()
         onMovieClick()
+        onUpcomingMovieClick()
     }
-
-    private fun setupTvAdapter(){
+    private fun setupTvAdapter() {
         tvAdapter = TrendingTvAdapter()
         binding.trendingTvRecyclerView.apply {
             adapter = tvAdapter
@@ -51,21 +51,24 @@ class HomePageFragment : Fragment() {
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.trendingTvRecyclerView)
     }
-
     private fun setupMovieAdapter(){
         movieAdapter = TrendingMovieAdapter()
         binding.trendingMoviesRecyclerView.apply {
             adapter = movieAdapter
         }
     }
-
+    private fun setupUpcomingMovieAdapter(){
+        upcomingMovieAdapter = TrendingMovieAdapter()
+        binding.upcomingMoviesRecyclerView.apply {
+            adapter = upcomingMovieAdapter
+        }
+    }
     private fun setupPeopleAdapter(){
         peopleAdapter = TrendingPeopleAdapter()
         binding.trendingPeopleRecyclerView.apply {
             adapter = peopleAdapter
         }
     }
-
     private fun getTrendingTv(){
         setupTvAdapter()
         viewModel.getTrendingTv()
@@ -73,7 +76,6 @@ class HomePageFragment : Fragment() {
             viewModel.tvList.collect{ tvAdapter.differ.submitList(it) }
         }
     }
-
     private fun getTrendingMovies(){
         setupMovieAdapter()
         viewModel.getTrendingMovies()
@@ -81,7 +83,13 @@ class HomePageFragment : Fragment() {
             viewModel.movieList.collect{ movieAdapter.differ.submitList(it) }
         }
     }
-
+    private fun getUpcomingMovies(){
+        setupUpcomingMovieAdapter()
+        viewModel.getUpComingMovies()
+        lifecycleScope.launch {
+            viewModel.upComingMovieList.collect{ upcomingMovieAdapter.differ.submitList(it) }
+        }
+    }
     private fun getTrendingPeople(){
         setupPeopleAdapter()
         viewModel.getTrendingPeople()
@@ -89,7 +97,6 @@ class HomePageFragment : Fragment() {
             viewModel.peopleList.collect{ peopleAdapter.differ.submitList(it) }
         }
     }
-
     private fun onMovieClick(){
         movieAdapter.onMovieClick = { data ->
            val fragment = MovieDetailsFragment()
@@ -99,6 +106,14 @@ class HomePageFragment : Fragment() {
             findNavController().navigate(R.id.action_homePageFragment_to_movieDetailsFragment,bundle)
         }
     }
-
+    private fun onUpcomingMovieClick(){
+        upcomingMovieAdapter.onMovieClick = { data ->
+            val fragment = MovieDetailsFragment()
+            val bundle = Bundle()
+            bundle.putInt("movie_Id",data.id)
+            fragment.arguments = bundle
+            findNavController().navigate(R.id.action_homePageFragment_to_movieDetailsFragment,bundle)
+        }
+    }
 
 }

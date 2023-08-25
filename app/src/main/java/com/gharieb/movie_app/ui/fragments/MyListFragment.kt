@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gharieb.movie_app.R
 import com.gharieb.movie_app.adapters.CategoriesAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingMovieAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingPeopleAdapter
-import com.gharieb.movie_app.adapters.homeAdapters.TrendingTvAdapter
-import com.gharieb.movie_app.databinding.FragmentHomePageBinding
+import com.gharieb.movie_app.adapters.SearchAdapter
 import com.gharieb.movie_app.databinding.FragmentMyListBinding
-import com.gharieb.movie_app.viewModels.HomeViewModel
 import com.gharieb.movie_app.viewModels.MyListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class MyListFragment : Fragment() {
     private lateinit var binding: FragmentMyListBinding
     private val viewModel: MyListViewModel by viewModels()
     private lateinit var categoriesAdapter: CategoriesAdapter
-    private lateinit var moviesByCategoryAdapter: TrendingMovieAdapter
+    private lateinit var moviesByCategoryAdapter: SearchAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +37,12 @@ class MyListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getCategories()
         getMoviesByCategory()
+        onMovieClick()
+        onOpenFragment()
+
+        binding.searchIcon.setOnClickListener {
+            findNavController().navigate(R.id.searchFragment)
+        }
     }
 
     private fun setupCategoriesAdapter(){
@@ -48,8 +53,9 @@ class MyListFragment : Fragment() {
     }
 
     private fun setupMoviesByCategoryAdapter(){
-        moviesByCategoryAdapter = TrendingMovieAdapter()
+        moviesByCategoryAdapter = SearchAdapter()
         binding.moviesWithGenresRecyclerView.apply {
+            layoutManager = GridLayoutManager(context,2, RecyclerView.VERTICAL,false)
             adapter = moviesByCategoryAdapter
         }
     }
@@ -71,5 +77,25 @@ class MyListFragment : Fragment() {
             }
         }
     }
+
+    private fun onMovieClick(){
+        moviesByCategoryAdapter.onMovieClick = { data ->
+            val fragment = MovieDetailsFragment()
+            val bundle = Bundle()
+            bundle.putInt("movie_Id",data.id)
+            fragment.arguments = bundle
+            findNavController().navigate(R.id.movieDetailsFragment,bundle)
+        }
+    }
+
+    private fun onOpenFragment(){
+        categoriesAdapter.setInitialSelectedItem(0)
+        viewModel.getMoviesByCategory(28)
+        lifecycleScope.launch {
+            viewModel.movieByCategoryList.collect{ moviesByCategoryAdapter.differ.submitList(it) }
+        }
+    }
+
+
 
 }

@@ -28,11 +28,16 @@ interface ApiService {
         @Query("api_key") ApiKey: String
     ): Response<TrendingPeople>
 
-    @GET("search/collection")
+    @GET("movie/upcoming")
+    suspend fun getUpComingMovies(
+        @Query("api_key") ApiKey: String
+    ): Response<TrendingMovies>
+
+    @GET("search/movie")
     suspend fun getSearchedItem(
         @Query("api_key") ApiKey: String,
         @Query("query") searchedItem: String
-    ): Response<TrendingTv>
+    ): Response<TrendingMovies>
 
     @GET("genre/movie/list")
     suspend fun getMoviesCategories(

@@ -23,6 +23,9 @@ class HomeViewModel @Inject constructor(
     private val _movieList = MutableStateFlow(emptyList<Movie>())
     val movieList: StateFlow<List<Movie>> = _movieList
 
+    private val _upComingMovieList = MutableStateFlow(emptyList<Movie>())
+    val upComingMovieList: StateFlow<List<Movie>> = _upComingMovieList
+
     private val _peopleList = MutableStateFlow(emptyList<People>())
     val peopleList: StateFlow<List<People>> = _peopleList
 
@@ -37,6 +40,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val response = homeRepository.getTrendingMovies()
             response.collect{ _movieList.value = it }
+        }
+    }
+
+    fun getUpComingMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = homeRepository.getUpComingMovies()
+            response.collect{ _upComingMovieList.value = it }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gharieb.movie_app.adapters.homeAdapters
+package com.gharieb.movie_app.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.gharieb.movie_app.data.categories.Categories
 import com.gharieb.movie_app.data.trendingMovies.Movie
 import com.gharieb.movie_app.databinding.TrendingMoviesItemBinding
 

@@ -2,6 +2,7 @@ package com.gharieb.movie_app.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -23,6 +24,20 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView = binding.bottomNavigationView
         navController = findNavController(R.id.fragment)
         bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (
+                destination.id != R.id.homePageFragment &&
+                destination.id !=R.id.searchFragment &&
+                destination.id !=R.id.myListFragment
+            ){
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                bottomNavigationView.visibility = View.GONE
+            } else {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
 
     }
 }

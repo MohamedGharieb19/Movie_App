@@ -1,4 +1,4 @@
-package com.gharieb.movie_app.adapters.homeAdapters
+package com.gharieb.movie_app.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

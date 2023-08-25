@@ -3,7 +3,6 @@ package com.gharieb.movie_app.repositories
 import com.gharieb.movie_app.api.ApiService
 import com.gharieb.movie_app.data.categories.Categories
 import com.gharieb.movie_app.data.trendingMovies.Movie
-import com.gharieb.movie_app.data.trendingTv.Tv
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
