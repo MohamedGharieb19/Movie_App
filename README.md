@@ -13,7 +13,7 @@ A simple and interactive movie app that allows users to explore trending movies,
 - Flows
 
 # Used Api: 
-- [https://api.openai.com/](https://api.themoviedb.org/3/)](https://api.themoviedb.org/3/)
+- [[https://api.openai.com/](https://api.themoviedb.org/3/)](https://api.themoviedb.org/3/)
 
 # Screenshots: 
 ![Screenshot 1](screenshots/homePage.png)
