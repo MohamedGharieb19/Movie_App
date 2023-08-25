@@ -18,6 +18,9 @@ A simple and interactive movie app that allows users to explore trending movies,
 # Screenshots: 
 ![Screenshot 1](screenshots/homePage.png)
 ![Screenshot 2](screenshots/followHomePage.png)
+![Screenshot 3](screenshots/searchPage.png)
+![Screenshot 4](screenshots/noResultsSearchPage.png)
+![Screenshot 5](screenshots/listPage.png)
 
 
 # Getting Started:
